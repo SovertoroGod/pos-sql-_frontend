@@ -42,8 +42,10 @@ export const updateUser = createAsyncThunk(
   "users/updateUser",
   async ({ id, data }, thunkAPI) => {
     try {
-      return await userService.updateUser(id, data);
+      console.log("updateUser async thunk - ID:", id, "Data:", data);
+      return await userService.updateUser({ id, data });
     } catch (error) {
+      console.error("updateUser error:", error);
       return thunkAPI.rejectWithValue(error.message);
     }
   }

@@ -9,10 +9,10 @@ const getUserById = async (id) => {
     return response.data;
 }
 
-const updateUser = async (id, data) => {
-    const response = await axiosClient.put(`/admin/update-user/${id}`, data);
-    return response.data;
-}
+const updateUser = async ({ id, data }) => {
+  const response = await axiosClient.patch(`/admin/update-user/${id}`, data);
+  return response.data;
+};
 const userService = {
     getAllUsers,
     getUserById,

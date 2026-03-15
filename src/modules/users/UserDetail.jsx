@@ -8,16 +8,17 @@ import { getAllBranches } from "../branches/branchSlice";
 
 const UserDetailPage = () => {
   const { id } = useParams();
+  const userId = Number(id);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { selectedUser, isLoading, branches } = useUserDetail(id);
+  const { selectedUser, isLoading, branches, deactivateUser } =
+    useUserDetail(userId);
   const branch = branches?.find(
     (b) => String(b.id) === String(selectedUser?.branch_id),
   );
 
   const branchDisplayName = branch?.branch_name || "No Branch Assigned";
   const branchDisplayCode = branch?.branch_code || "No Branch Assigned";
-  console.log(branchDisplayName, "Result for UI");
 
   const getRoleBadgeColor = (role) => {
     const colors = {
@@ -104,7 +105,9 @@ const UserDetailPage = () => {
                 <Edit className="h-4 w-4" />
                 Edit User
               </button>
-              <button className="inline-flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-200">
+              <button
+                className="inline-flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-200"
+                onClick={deactivateUser}>
                 <Trash2 className="h-4 w-4" />
                 Delete User
               </button>
@@ -125,10 +128,11 @@ const UserDetailPage = () => {
             <div className="p-6 space-y-4">
               <div className="flex justify-between items-center py-3 border-b border-gray-100">
                 <span className="text-sm font-medium text-gray-500">
-                  User ID
+                  Status
                 </span>
-                <span className="text-sm text-gray-900 font-mono">
-                  #{selectedUser.id}
+                <span
+                  className={`text-sm font-medium ${selectedUser.is_active ? "text-green-700" : "text-red-700"}`}>
+                  {selectedUser.is_active ? "Active" : "Inactive"}
                 </span>
               </div>
               <div className="flex justify-between items-center py-3 border-b border-gray-100">
@@ -262,7 +266,9 @@ const UserDetailPage = () => {
                   <Mail className="h-4 w-4" />
                   Send Email
                 </button>
-                <button className="w-full inline-flex items-center justify-center gap-2 bg-red-600 text-white px-4 py-3 rounded-lg hover:bg-red-700 transition-colors duration-200">
+                <button
+                  className="w-full inline-flex items-center justify-center gap-2 bg-red-600 text-white px-4 py-3 rounded-lg hover:bg-red-700 transition-colors duration-200"
+                  onClick={deactivateUser}>
                   <Trash2 className="h-4 w-4" />
                   Delete User
                 </button>
