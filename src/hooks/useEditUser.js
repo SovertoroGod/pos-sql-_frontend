@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getUserById, updateUser } from '../modules/users/userSlice';
+import { getAllBranches } from "../modules/branches/branchSlice";
 
 const useEditUser = (userId) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { selectedUser, isLoading } = useSelector((state) => state.users);
-
+  const { branches } = useSelector((state) => state.branches);
   const [form, setForm] = useState({
     full_name: "",
     username: "",
@@ -30,6 +31,10 @@ const useEditUser = (userId) => {
       setForm(selectedUser);
     }
   }, [selectedUser]);
+
+  useEffect(() => {
+    dispatch(getAllBranches());
+  }, [dispatch]);
 
   // Handle form input changes
   const handleChange = (e) => {
@@ -73,13 +78,14 @@ const useEditUser = (userId) => {
     selectedUser,
     form,
     isLoading,
-    
+    branches,
+
     // Actions
     handleChange,
     handleSubmit,
     handleCancel,
     resetForm,
-    
+
     // Navigation
     navigate,
   };
