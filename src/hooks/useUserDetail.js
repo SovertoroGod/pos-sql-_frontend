@@ -1,12 +1,14 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  deleteUser,
   getAllUsers,
   getUserById,
   updateUser,
 } from "../modules/users/userSlice";
 import { getAllBranches } from "../modules/branches/branchSlice";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const useUserDetail = (userId) => {
   const dispatch = useDispatch();
@@ -35,23 +37,47 @@ const useUserDetail = (userId) => {
   const isLoading = !selectedUser;
 
 const deactivateUser = async () => {
-  const confirmDelete = window.confirm(
-    "Are you sure want to deactivate this user?",
-  );
+  const result = await Swal.fire({
+    title: "Are you sure?",
+    text: "You want to deactivate this user?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#ef4444",
+    cancelButtonColor: "#6b7280",
+    confirmButtonText: "Yes, deactivate!",
+    cancelButtonText: "Cancel",
+  });
 
-  if (!confirmDelete) return;
+  if (!result.isConfirmed) return;
 
   try {
-    await dispatch(
-      updateUser({
-        id: selectedUser.id,
-        data: { is_active: false },
-      }),
-    );
+    const result = await dispatch(deleteUser(selectedUser.id));
 
-    navigate("/admin/users");
+    // Check if the action was rejected
+    if (deleteUser.rejected.match(result)) {
+      throw new Error(result.payload || "User not exit or deactivated");
+    }
+
+    await Swal.fire({
+      title: "Deactivated!",
+      text: "User has been deactivated successfully.",
+      icon: "success",
+      timer: 2000,
+      showConfirmButton: false,
+    });
+
+    navigate(`/admin/users`);
   } catch (error) {
-    console.error("Deactivate error:", error);
+    // Show the actual error message from backend response
+    console.log(error, "hehehe from deactivate");
+    const errorMessage = "User not exit or deactivated";
+
+    await Swal.fire({
+      title: "Error!",
+      text: errorMessage,
+      icon: "error",
+      confirmButtonColor: "#ef4444",
+    });
   }
 };
 

@@ -190,8 +190,8 @@ const EditUserPage = () => {
                       value={form.is_active}
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
-                      <option value={true}>Active</option>
-                      <option value={false}>Inactive</option>
+                      <option value="true">Active</option>
+                      <option value="false">Inactive</option>
                     </select>
                   </div>
                 </div>

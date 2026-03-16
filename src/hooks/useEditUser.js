@@ -26,11 +26,14 @@ const useEditUser = (userId) => {
   }, [dispatch, userId]);
 
   // Update form when selectedUser data is available
-  useEffect(() => {
-    if (selectedUser) {
-      setForm(selectedUser);
-    }
-  }, [selectedUser]);
+useEffect(() => {
+  if (selectedUser) {
+    setForm({
+      ...selectedUser,
+      is_active: Boolean(selectedUser.is_active),
+    });
+  }
+}, [selectedUser]);
 
   useEffect(() => {
     dispatch(getAllBranches());
@@ -38,9 +41,10 @@ const useEditUser = (userId) => {
 
   // Handle form input changes
   const handleChange = (e) => {
+const { name, value } = e.target;
     setForm({
       ...form,
-      [e.target.name]: e.target.value,
+      [name]: name === "is_active" ? value === "true" : value,
     });
   };
 
@@ -49,7 +53,6 @@ const useEditUser = (userId) => {
     e.preventDefault();
     try {
       await dispatch(updateUser({ id: userId, data: form }));
-      // Navigate to user detail page after successful update
       navigate(`/admin/users/${userId}`);
     } catch (error) {
       console.error('Error updating user:', error);

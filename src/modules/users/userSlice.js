@@ -35,21 +35,33 @@ export const getUserById = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 export const updateUser = createAsyncThunk(
   "users/updateUser",
   async ({ id, data }, thunkAPI) => {
     try {
-      console.log("updateUser async thunk - ID:", id, "Data:", data);
+      // console.log("updateUser async thunk - ID:", id, "Data:", data);
       return await userService.updateUser({ id, data });
     } catch (error) {
       console.error("updateUser error:", error);
       return thunkAPI.rejectWithValue(error.message);
     }
-  }
-)
+  },
+);
+
+export const deleteUser = createAsyncThunk(
+  "users/deleteUser",
+  async (id, thunkAPI) => {
+    try {
+      return await userService.deleteUser(id);
+    } catch (error) {
+      console.error("updateUser error:", error);
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  },
+);
 
 const userSlice = createSlice({
   name: "users",
@@ -84,7 +96,7 @@ const userSlice = createSlice({
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         state.selectedUser = action.payload.data;
-        state.isLoading = false;  
+        state.isLoading = false;
       })
       .addCase(updateUser.pending, (state) => {
         state.isLoading = true;
@@ -92,6 +104,17 @@ const userSlice = createSlice({
       .addCase(updateUser.rejected, (state) => {
         state.isLoading = false;
       })
+      .addCase(deleteUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteUser.fulfilled, (state, action) => {
+        state.selectedUser = action.payload.data;
+        state.isLoading = false;
+      })
+      .addCase(deleteUser.rejected, (state, action) => {
+        state.isLoading = false;
+        console.log("Delete user failed : ", action.payload);
+      });
   },
 });
 
