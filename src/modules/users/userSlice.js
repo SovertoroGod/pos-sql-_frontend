@@ -12,6 +12,8 @@ const initialState = {
     username: "",
     email: "",
     role: "",
+    is_active: "",
+    branch_id: "",
   },
   isLoading: false,
 };

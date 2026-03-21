@@ -52,7 +52,7 @@ const { name, value } = e.target;
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await dispatch(updateUser({ id: userId, data: form }));
+      await dispatch(updateUser({ id: userId, data: form })).unwrap();
       navigate(`/admin/users/${userId}`);
     } catch (error) {
       console.error('Error updating user:', error);
@@ -88,9 +88,6 @@ const { name, value } = e.target;
     handleSubmit,
     handleCancel,
     resetForm,
-
-    // Navigation
-    navigate,
   };
 };
 

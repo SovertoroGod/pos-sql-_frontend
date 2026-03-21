@@ -14,7 +14,6 @@ const EditUserPage = () => {
     handleChange,
     handleSubmit,
     handleCancel,
-    navigate,
   } = useEditUser(id);
 
   const getRoleBadgeColor = (role) => {
@@ -136,7 +135,7 @@ const EditUserPage = () => {
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
                       <Building className="h-4 w-4" />
-                      Branch ID
+                      Branch Code
                     </label>
                     <select
                       name="branch_id"
@@ -213,8 +212,7 @@ const EditUserPage = () => {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="inline-flex items-center gap-2 px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
-                    onClick={navigate}>
+                    className="inline-flex items-center gap-2 px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg">
                     <Save className="h-4 w-4" />
                     {isLoading ? "Updating..." : "Update User"}
                   </button>

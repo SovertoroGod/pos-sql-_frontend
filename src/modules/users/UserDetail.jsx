@@ -13,9 +13,7 @@ const UserDetailPage = () => {
   const dispatch = useDispatch();
   const { selectedUser, isLoading, branches, deactivateUser } =
     useUserDetail(userId);
-  const branch = branches?.find(
-    (b) => String(b.id) === String(selectedUser?.branch_id),
-  );
+  const branch = branches?.find((b) => b.id === selectedUser?.branch_id);
 
   const branchDisplayName = branch?.branch_name || "No Branch Assigned";
   const branchDisplayCode = branch?.branch_code || "No Branch Assigned";
@@ -258,10 +256,10 @@ const UserDetailPage = () => {
                   <Edit className="h-4 w-4" />
                   Edit User Profile
                 </button>
-                <button className="w-full inline-flex items-center justify-center gap-2 bg-gray-600 text-white px-4 py-3 rounded-lg hover:bg-gray-700 transition-colors duration-200">
+                {/* <button className="w-full inline-flex items-center justify-center gap-2 bg-gray-600 text-white px-4 py-3 rounded-lg hover:bg-gray-700 transition-colors duration-200">
                   <Shield className="h-4 w-4" />
                   Change Role
-                </button>
+                </button> */}
                 <button className="w-full inline-flex items-center justify-center gap-2 bg-yellow-600 text-white px-4 py-3 rounded-lg hover:bg-yellow-700 transition-colors duration-200">
                   <Mail className="h-4 w-4" />
                   Send Email

@@ -37,7 +37,7 @@ const LoginPage = () => {
         e.preventDefault();
 
         try {
-            await dispatch(login(formData));
+            const res = await dispatch(login(formData)).unwrap();
             Swal.fire({
                 title: "Login Successful!",
                 text: "Welcome back! Redirecting to your dashboard...",
