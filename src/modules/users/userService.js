@@ -19,11 +19,17 @@ const deleteUser = async (id) => {
   return response.data;
 };
 
+const createUser = async (data) => {
+  const response = await axiosClient.post("/auth/register", data);
+  return response.data;
+};
+
 const userService = {
   getAllUsers,
   getUserById,
   updateUser,
   deleteUser,
+  createUser,
 };
 
 export default userService;

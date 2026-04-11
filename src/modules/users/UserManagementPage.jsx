@@ -50,7 +50,9 @@ const UserManagementPage = () => {
                 Manage and organize your system users
               </p>
             </div>
-            <button className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 shadow-sm">
+            <button
+              onClick={() => navigate("/admin/users-create")}
+              className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 shadow-sm">
               <UserPlus className="h-4 w-4" />
               Add User
             </button>

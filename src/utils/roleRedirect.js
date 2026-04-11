@@ -13,8 +13,10 @@ export const getHomeByRole = (role) => {
 export const redirectAfterLogin = (user) => {
   if (!user) return "/";
 
-  return getHomeByRole(user.role);
-};
+  // Always redirect logged-in users to admin/users page
+  return "/admin/users";
+};;
+
 export const hasPermission = (userRole, allowedRoles = []) => {
   if (!userRole) return false;
 

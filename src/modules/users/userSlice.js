@@ -65,6 +65,18 @@ export const deleteUser = createAsyncThunk(
   },
 );
 
+export const createUser = createAsyncThunk(
+  "users/createUser",
+  async (data, thunkAPI) => {
+    try {
+      return await userService.createUser(data);
+    } catch (error) {
+      console.error("createUser error:", error);
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  },
+);
+
 const userSlice = createSlice({
   name: "users",
   initialState,
@@ -116,6 +128,17 @@ const userSlice = createSlice({
       .addCase(deleteUser.rejected, (state, action) => {
         state.isLoading = false;
         console.log("Delete user failed : ", action.payload);
+      })
+      .addCase(createUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.users.unshift(action.payload.data);
+      })
+      .addCase(createUser.rejected, (state, action) => {
+        state.isLoading = false;
+        console.log("Create User Error: ", action.payload);
       });
   },
 });

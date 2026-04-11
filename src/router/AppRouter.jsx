@@ -1,34 +1,34 @@
 import React from "react";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
-import LoginPage from "../modules/auth/LoginPage";
-import {routes} from "./routes";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RoleGuard from "./RoleGuard";
-const AppRouter = () => {
-    return (
-        <BrowserRouter>
-            <Routes>
-                {routes.map((route, index) => {
-                    const Element = route.element;
-                    return (
-                        <Route
-                            key={index}
-                            path={route.path}
-                            element={
-                                route.roles ? (
-                                    <RoleGuard roles={route.roles}>
-                                        <Element />
-                                    </RoleGuard>
-                                ) : (
-                                    <Element />
-                                )
-                            }
-                        />
-                    );
-                })}
-                ;
-            </Routes>
-        </BrowserRouter>
+import { routes } from "./routes";
+
+const renderRoutes = (routes) => {
+  return routes.map((route, index) => {
+    const Element = route.element;
+
+    const wrappedElement = route.role ? (
+      <RoleGuard roles={route.role}>
+        <Element />
+      </RoleGuard>
+    ) : (
+      <Element />
     );
+
+    return (
+      <Route key={index} path={route.path} element={wrappedElement}>
+        {route.children && renderRoutes(route.children)}
+      </Route>
+    );
+  });
+};
+
+const AppRouter = () => {
+  return (
+    <BrowserRouter>
+      <Routes>{renderRoutes(routes)}</Routes>
+    </BrowserRouter>
+  );
 };
 
 export default AppRouter;
