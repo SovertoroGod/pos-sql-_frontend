@@ -3,11 +3,11 @@ import { LayoutDashboard, Users, Package, FileText } from "lucide-react";
 import useAuth from "../hooks/useAuth";
 
 const Sidebar = () => {
-  const naviagate = useNavigate();
+  const navigate = useNavigate();
   const { logout } = useAuth();
   const handleLogout = () => {
     logout();
-    naviagate("/");
+    navigate("/");
   };
   const menuItems = [
     { to: "/admin", label: "Dashboard", icon: LayoutDashboard },

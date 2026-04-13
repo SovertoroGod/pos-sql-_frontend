@@ -30,7 +30,7 @@ const useCreateUser = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await dispatch(createUser(from));
+            await dispatch(createUser(form));
             navigate("/admin/users")
         } catch (error) {
             console.error("Create user error:",error)
