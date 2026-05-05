@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getUserById, updateUser } from '../modules/users/userSlice';
-import { getAllBranches } from "../modules/branches/branchSlice";
+import { getAllBranchesForUser } from "../modules/branches/branchSlice";
 
 const useEditUser = (userId) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { selectedUser, isLoading } = useSelector((state) => state.users);
-  const { branches } = useSelector((state) => state.branches);
+  const { branchesForUser } = useSelector((state) => state.branches);
+  const [branchSearch, setBranchSearch] = useState("");
   const [form, setForm] = useState({
     full_name: "",
     username: "",
@@ -26,18 +27,24 @@ const useEditUser = (userId) => {
   }, [dispatch, userId]);
 
   // Update form when selectedUser data is available
-useEffect(() => {
-  if (selectedUser) {
-    setForm({
-      ...selectedUser,
-      is_active: Boolean(selectedUser.is_active),
-    });
-  }
-}, [selectedUser]);
+  useEffect(() => {
+    if (selectedUser) {
+      setForm({
+        ...selectedUser,
+        role: selectedUser.role?.toLowerCase() || "",
+        is_active: Boolean(selectedUser.is_active),
+      });
+    }
+  }, [selectedUser]);
 
   useEffect(() => {
-    dispatch(getAllBranches());
-  }, [dispatch]);
+    const timer = setTimeout(() => {
+      dispatch(
+        getAllBranchesForUser(branchSearch ? { search: branchSearch } : {}),
+      );
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [dispatch, branchSearch]);
 
   // Handle form input changes
   const handleChange = (e) => {
@@ -52,10 +59,13 @@ const { name, value } = e.target;
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await dispatch(updateUser({ id: userId, data: form })).unwrap();
-      navigate(`/admin/users/${userId}`);
+      const result = await dispatch(
+        updateUser({ id: userId, data: form }),
+      ).unwrap();
+      return { success: true, data: result };
     } catch (error) {
       console.error('Error updating user:', error);
+      return { success: false, error: error.message || error };
     }
   };
 
@@ -81,7 +91,9 @@ const { name, value } = e.target;
     selectedUser,
     form,
     isLoading,
-    branches,
+    branchesForUser,
+    branchSearch,
+    setBranchSearch,
 
     // Actions
     handleChange,

@@ -102,7 +102,7 @@ const userSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getUserById.fulfilled, (state, action) => {
-        state.selectedUser = action.payload.data[0];
+        state.selectedUser = action.payload.data;
         state.isLoading = false;
       })
       .addCase(getUserById.rejected, (state) => {

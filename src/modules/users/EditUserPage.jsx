@@ -1,28 +1,98 @@
-import React from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useRef, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import useEditUser from "../../hooks/useEditUser";
 import AdminLayout from "../../components/AdminLayout";
-import { ArrowLeft, User, Mail, Shield, Building, ToggleLeft, Save, X } from 'lucide-react';
+import Swal from "sweetalert2";
+import {
+  ArrowLeft,
+  User,
+  Mail,
+  Shield,
+  Building,
+  ToggleLeft,
+  Save,
+  X,
+  Search,
+  ChevronDown,
+} from "lucide-react";
 
 const EditUserPage = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const {
     selectedUser,
     form,
-    branches,
+    branchesForUser,
     isLoading,
     handleChange,
     handleSubmit,
     handleCancel,
+    branchSearch,
+    setBranchSearch,
   } = useEditUser(id);
+  const [isBranchDropdownOpen, setIsBranchDropdownOpen] = useState(false);
+  const branchDropdownRef = useRef(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        branchDropdownRef.current &&
+        !branchDropdownRef.current.contains(event.target)
+      ) {
+        setIsBranchDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleBranchSelect = (branchId) => {
+    handleChange({ target: { name: "branch_id", value: branchId } });
+    setIsBranchDropdownOpen(false);
+  };
+
+  const getSelectedBranchName = () => {
+    if (!form.branch_id) return "Select Branch";
+    const selected = branchesForUser?.find((b) => b.id === form.branch_id);
+    return selected
+      ? `${selected.branch_name} - ${selected.branch_code}`
+      : "Select Branch";
+  };
 
   const getRoleBadgeColor = (role) => {
+    const normalizedRole = role?.toLowerCase();
     const colors = {
       admin: "bg-red-100 text-red-700 border-red-200",
       manager: "bg-purple-100 text-purple-700 border-purple-200",
       cashier: "bg-green-100 text-green-700 border-green-200",
     };
-    return colors[role] || "bg-gray-100 text-gray-700 border-gray-200";
+    return (
+      colors[normalizedRole] || "bg-gray-100 text-gray-700 border-gray-200"
+    );
+  };
+
+  // Handle form submission with SweetAlert
+  const onSubmit = async (e) => {
+    const result = await handleSubmit(e);
+    if (result.success) {
+      Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: "User updated successfully.",
+        showConfirmButton: false,
+        timer: 1500,
+      }).then(() => {
+        navigate(`/admin/users/${id}`);
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text: result.error || "Failed to update user. Please try again.",
+        confirmButtonColor: "#3b82f6",
+      });
+    }
   };
 
   return (
@@ -65,7 +135,7 @@ const EditUserPage = () => {
       {/* Edit Form */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
         <div className="p-8">
-          <form onSubmit={handleSubmit} className="space-y-8 max-w-4xl mx-auto">
+          <form onSubmit={onSubmit} className="space-y-8 max-w-4xl mx-auto">
             {/* Personal Information Section */}
             <div>
               <h2 className="text-lg font-semibold text-gray-900 mb-6 flex items-center gap-2">
@@ -128,24 +198,88 @@ const EditUserPage = () => {
                   />
                 </div>
 
-                {/* Branch ID */}
-                <div className="space-y-2">
+                {/* Branch ID - Searchable Dropdown */}
+                <div className="space-y-2 relative" ref={branchDropdownRef}>
                   <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
                     <Building className="h-4 w-4" />
                     Branch Code
                   </label>
-                  <select
+                  {/* Dropdown Trigger */}
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setIsBranchDropdownOpen(!isBranchDropdownOpen)
+                    }
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white text-left flex items-center justify-between">
+                    <span
+                      className={
+                        form.branch_id ? "text-gray-900" : "text-gray-500"
+                      }>
+                      {getSelectedBranchName()}
+                    </span>
+                    <ChevronDown
+                      className={`h-5 w-5 text-gray-400 transition-transform ${isBranchDropdownOpen ? "rotate-180" : ""}`}
+                    />
+                  </button>
+
+                  {/* Dropdown Menu */}
+                  {isBranchDropdownOpen && (
+                    <div className="absolute z-50 left-0 right-0 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-hidden">
+                      {/* Search Input */}
+                      <div className="p-2 border-b border-gray-200 sticky top-0 bg-white">
+                        <div className="relative">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <Search className="h-4 w-4 text-gray-400" />
+                          </div>
+                          <input
+                            type="text"
+                            placeholder="Search branches..."
+                            value={branchSearch}
+                            onChange={(e) => setBranchSearch(e.target.value)}
+                            className="w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            autoFocus
+                          />
+                        </div>
+                      </div>
+
+                      {/* Branch List */}
+                      <div className="overflow-y-auto max-h-48">
+                        {branchesForUser && branchesForUser.length > 0 ? (
+                          branchesForUser.map((branch) => (
+                            <button
+                              key={branch.id}
+                              type="button"
+                              onClick={() => handleBranchSelect(branch.id)}
+                              className={`w-full px-4 py-2 text-left text-sm hover:bg-blue-50 transition-colors ${
+                                form.branch_id === branch.id
+                                  ? "bg-blue-100 text-blue-900 font-medium"
+                                  : "text-gray-700"
+                              }`}>
+                              <div className="font-medium">
+                                {branch.branch_name}
+                              </div>
+                              <div className="text-xs text-gray-500">
+                                {branch.branch_code}
+                              </div>
+                            </button>
+                          ))
+                        ) : (
+                          <div className="px-4 py-3 text-sm text-gray-500 text-center">
+                            {branchSearch
+                              ? "No branches found"
+                              : "Loading branches..."}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Hidden input for form submission */}
+                  <input
+                    type="hidden"
                     name="branch_id"
                     value={form.branch_id || ""}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 required">
-                    <option value="">Select Branch</option>
-                    {branches.map((branch) => (
-                      <option key={branch.id} value={branch.id}>
-                        {branch.branch_name} - {branch.branch_code}
-                      </option>
-                    ))}
-                  </select>
+                  />
                 </div>
               </div>
             </div>

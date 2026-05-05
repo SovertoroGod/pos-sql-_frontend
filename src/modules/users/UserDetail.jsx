@@ -19,12 +19,15 @@ const UserDetailPage = () => {
   const branchDisplayCode = branch?.branch_code || "No Branch Assigned";
 
   const getRoleBadgeColor = (role) => {
+    const normalizedRole = role?.toLowerCase();
     const colors = {
       admin: "bg-red-100 text-red-700 border-red-200",
       manager: "bg-purple-100 text-purple-700 border-purple-200",
       cashier: "bg-green-100 text-green-700 border-green-200",
     };
-    return colors[role] || "bg-gray-100 text-gray-700 border-gray-200";
+    return (
+      colors[normalizedRole] || "bg-gray-100 text-gray-700 border-gray-200"
+    );
   };
 
   if (isLoading) {
