@@ -20,7 +20,7 @@ const Sidebar = () => {
     { to: "/admin/users", label: "Users", icon: Users },
     { to: "/admin/branches", label: "Branches", icon: Building2 },
     { to: "/admin/reports", label: "Reports", icon: FileText },
-    { to: "/admin/category-create", label: "Categories", icon: Package },
+    { to: "/admin/categories", label: "Categories", icon: Package },
   ];
 
   return (

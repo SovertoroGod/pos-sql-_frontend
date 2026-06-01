@@ -4,7 +4,12 @@ import BranchDetailPage from "../modules/branches/BranchDetailPage";
 import BranchesListPage from "../modules/branches/BranchesListPage";
 import CreateBranchPage from "../modules/branches/CreateBranchPage";
 import EditBranchPage from "../modules/branches/EditBranchPage";
+import CategoryDetailPage from "../modules/category/CategoryDetailPage";
+import CategoryListsPage from "../modules/category/CategoryListsPage";
 import CreateCategoryPage from "../modules/category/CreateCategoryPage";
+import CreateSubCategoryPage from "../modules/category/CreateSubCategoryPage";
+import UpdateCategoryPage from "../modules/category/UpdateCategoryPage";
+import UpdateSubCategoryPage from "../modules/category/UpdateSubCategoryPage";
 import CreateUserPage from "../modules/users/CreateUserPage";
 import EditUserPage from "../modules/users/EditUserPage";
 import UserDetailPage from "../modules/users/UserDetail";
@@ -64,8 +69,28 @@ export const routes = [
         element: CreateBranchPage,
       },
       {
+        path: "categories",
+        element: CategoryListsPage,
+      },
+      {
         path: "category-create",
         element: CreateCategoryPage,
+      },
+      {
+        path: "subcategory-create/:parentId",
+        element: CreateSubCategoryPage,
+      },
+      {
+        path: "category-detail/:id",
+        element: CategoryDetailPage,
+      },
+      {
+        path: "category-edit/:id",
+        element: UpdateCategoryPage,
+      },
+      {
+        path: "subcategory-edit/:id",
+        element: UpdateSubCategoryPage,
       },
     ],
   },

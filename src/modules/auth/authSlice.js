@@ -1,12 +1,22 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import authServices from "./authService";
 
-const user = localStorage.getItem("user")
-  ? JSON.parse(localStorage.getItem("user"))
-  : null;
+const getUserFromLocalStorage = () => {
+  const userStr = localStorage.getItem("user");
+  if (!userStr) return null;
+  try {
+    const userObj = JSON.parse(userStr);
+    if (userObj && userObj.role) {
+      userObj.role = userObj.role.toLowerCase();
+    }
+    return userObj;
+  } catch (e) {
+    return null;
+  }
+};
 const token = localStorage.getItem("token");
 const initialState = {
-  user: user ? user : null,
+  user: getUserFromLocalStorage(),
   token: token ? token : null,
   isLoading: false,
   isError: false,
@@ -51,9 +61,13 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.user = action.payload.data.user;
+        const userData = action.payload.data.user;
+        if (userData && userData.role) {
+          userData.role = userData.role.toLowerCase();
+        }
+        state.user = userData;
         state.token = action.payload.data.token;
-        localStorage.setItem("user", JSON.stringify(action.payload.data.user));
+        localStorage.setItem("user", JSON.stringify(userData));
         localStorage.setItem("token", action.payload.data.token);
       })
       .addCase(login.rejected, (state, action) => {
