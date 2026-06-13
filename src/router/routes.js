@@ -35,6 +35,9 @@ import ManagerStockTransfersPage from "../modules/stockTransfer/ManagerStockTran
 import ManagerCreateStockTransferPage from "../modules/stockTransfer/ManagerCreateStockTransferPage";
 import StockTransferDetailPage from "../modules/stockTransfer/StockTransferDetailPage";
 import CreateStockTransferPage from "../modules/stockTransfer/CreateStockTransferPage";
+import CreateIssueItemPage from "../modules/issueItem/CreateIssueItemPage";
+import IssueItemsPage from "../modules/issueItem/IssueItemsPage";
+import ManagerIssueItemsPage from "../modules/issueItem/ManagerIssueItemsPage";
 import NotificationsPage from "../modules/notification/NotificationsPage";
 import { ROLES } from "../utils/roles";
 
@@ -176,6 +179,10 @@ export const routes = [
         path: "notifications",
         element: NotificationsPage,
       },
+      {
+        path: "issue-items",
+        element: IssueItemsPage,
+      },
     ],
   },
   {
@@ -196,8 +203,16 @@ export const routes = [
         element: ManagerCreateStockTransferPage,
       },
       {
+        path: "issue-items-create",
+        element: CreateIssueItemPage,
+      },
+      {
         path: "notifications",
         element: NotificationsPage,
+      },
+      {
+        path: "issue-items",
+        element: ManagerIssueItemsPage,
       },
     ],
   },

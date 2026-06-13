@@ -10,6 +10,7 @@ import productUnitLogReducer from "../modules/productUnitLog/productUnitLogSlice
 import adminDashboardReducer from "../modules/adminDashboard/adminDashboardSlice";
 import managerDashboardReducer from "../modules/managerDashboard/managerDashboardSlice";
 import stockTransferReducer from "../modules/stockTransfer/stockTransferSlice";
+import issueItemReducer from "../modules/issueItem/issueItemSlice";
 import notificationReducer from "../modules/notification/notificationSlice";
 
 export const store = configureStore({
@@ -25,6 +26,7 @@ export const store = configureStore({
     adminDashboard: adminDashboardReducer,
     managerDashboard: managerDashboardReducer,
     stockTransfer: stockTransferReducer,
+    issueItem: issueItemReducer,
     notification: notificationReducer,
   },
 });

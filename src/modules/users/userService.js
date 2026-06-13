@@ -1,19 +1,5 @@
 import axiosClient from "../../api/axiosClient";
 
-// Normalize role to uppercase to match backend enum
-const normalizeRole = (role) => {
-  if (!role) return role;
-  return role.toUpperCase();
-};
-
-// Transform user data to match backend schema
-const transformUserData = (data) => {
-  return {
-    ...data,
-    role: normalizeRole(data.role),
-  };
-};
-
 const getAllUsers = async (params) => {
   const response = await axiosClient.get("/admin/users", { params });
   return response.data;
@@ -24,8 +10,7 @@ const getUserById = async (id) => {
 };
 
 const updateUser = async ({ id, data }) => {
-  const normalizedData = transformUserData(data);
-  const response = await axiosClient.patch(`/admin/users/${id}`, normalizedData);
+  const response = await axiosClient.patch(`/admin/users/${id}`, data);
   return response.data;
 };
 
@@ -35,8 +20,7 @@ const deleteUser = async (id) => {
 };
 
 const createUser = async (data) => {
-  const normalizedData = transformUserData(data);
-  const response = await axiosClient.post("/auth/register", normalizedData);
+  const response = await axiosClient.post("/auth/register", data);
   return response.data;
 };
 
