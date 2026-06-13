@@ -5,6 +5,11 @@ const getAllStockTransfers = async (params) => {
   return response.data;
 };
 
+const getAllStockTransfersForManager = async (params) => {
+  const response = await axiosClient.get("/manager/stock-transfers", { params });
+  return response.data;
+};
+
 const getStockTransferById = async (id) => {
   const response = await axiosClient.get(`/admin/stock-transfers/${id}`);
   return response.data;
@@ -27,6 +32,7 @@ const receiveStockTransfer = async (id) => {
 
 const stockTransferServices = {
   getAllStockTransfers,
+  getAllStockTransfersForManager,
   getStockTransferById,
   createStockTransfer,
   cancelStockTransfer,

@@ -8,6 +8,7 @@ import productItemReducer from "../modules/productItem/productItemSlice";
 import productUnitReducer from "../modules/productUnit/productUnitSlice";
 import productUnitLogReducer from "../modules/productUnitLog/productUnitLogSlice";
 import adminDashboardReducer from "../modules/adminDashboard/adminDashboardSlice";
+import managerDashboardReducer from "../modules/managerDashboard/managerDashboardSlice";
 import stockTransferReducer from "../modules/stockTransfer/stockTransferSlice";
 import notificationReducer from "../modules/notification/notificationSlice";
 
@@ -22,6 +23,7 @@ export const store = configureStore({
     productUnit: productUnitReducer,
     productUnitLog: productUnitLogReducer,
     adminDashboard: adminDashboardReducer,
+    managerDashboard: managerDashboardReducer,
     stockTransfer: stockTransferReducer,
     notification: notificationReducer,
   },

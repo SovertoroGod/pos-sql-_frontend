@@ -27,8 +27,12 @@ import CreateProductUnitPage from "../modules/productUnit/CreateProductUnitPage"
 import EditProductUnitPage from "../modules/productUnit/EditProductUnitPage";
 import ProductUnitLogsPage from "../modules/productUnitLog/ProductUnitLogsPage";
 import AdminDashboard from "../pages/admin/AdminDashBoard";
+import ManagerDashboard from "../pages/manager/ManagerDashboard";
+import ManagerLayout from "../layouts/ManagerLayout";
 import ErrorPage from "../pages/ErrorPage";
 import StockTransfersPage from "../modules/stockTransfer/StockTransfersPage";
+import ManagerStockTransfersPage from "../modules/stockTransfer/ManagerStockTransfersPage";
+import ManagerCreateStockTransferPage from "../modules/stockTransfer/ManagerCreateStockTransferPage";
 import StockTransferDetailPage from "../modules/stockTransfer/StockTransferDetailPage";
 import CreateStockTransferPage from "../modules/stockTransfer/CreateStockTransferPage";
 import NotificationsPage from "../modules/notification/NotificationsPage";
@@ -167,6 +171,29 @@ export const routes = [
       {
         path: "stock-transfers-create",
         element: CreateStockTransferPage,
+      },
+      {
+        path: "notifications",
+        element: NotificationsPage,
+      },
+    ],
+  },
+  {
+    path: "/manager",
+    element: ManagerLayout,
+    role: [ROLES.MANAGER],
+    children: [
+      {
+        index: true,
+        element: ManagerDashboard,
+      },
+      {
+        path: "stock-transfers",
+        element: ManagerStockTransfersPage,
+      },
+      {
+        path: "stock-transfers-create",
+        element: ManagerCreateStockTransferPage,
       },
       {
         path: "notifications",

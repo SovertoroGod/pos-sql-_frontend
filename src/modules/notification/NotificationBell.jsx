@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Bell, CheckCheck, Info, Send, AlertTriangle, Check } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { getMyNotifications, markAsRead, markAllAsRead } from "./notificationSlice";
+import useAuth from "../../hooks/useAuth";
 
 const typeStyles = {
   transfer_request: "bg-blue-100 text-blue-700",
@@ -25,6 +26,7 @@ const NotificationBell = () => {
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const dropdownRef = useRef(null);
+  const { user } = useAuth();
 
   const fetchNotifications = useCallback(async () => {
     try {
@@ -81,7 +83,7 @@ const NotificationBell = () => {
 
   const handleViewAll = () => {
     setIsOpen(false);
-    navigate("/admin/notifications");
+    navigate(user?.role === "manager" ? "/manager/notifications" : "/admin/notifications");
   };
 
   const formatDate = (dateStr) => {

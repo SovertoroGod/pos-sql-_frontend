@@ -14,6 +14,19 @@ export const getAllStockTransfers = createAsyncThunk(
   },
 );
 
+export const getAllStockTransfersForManager = createAsyncThunk(
+  "stockTransfer/getAllStockTransfersForManager",
+  async (params, thunkAPI) => {
+    try {
+      return await stockTransferServices.getAllStockTransfersForManager(params);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || error.message,
+      );
+    }
+  },
+);
+
 export const getStockTransferById = createAsyncThunk(
   "stockTransfer/getStockTransferById",
   async (id, thunkAPI) => {
@@ -94,6 +107,17 @@ const stockTransferSlice = createSlice({
         state.metadata = action.payload._metadata || {};
       })
       .addCase(getAllStockTransfers.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(getAllStockTransfersForManager.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllStockTransfersForManager.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.stockTransfers = action.payload.data;
+        state.metadata = action.payload._metadata || {};
+      })
+      .addCase(getAllStockTransfersForManager.rejected, (state) => {
         state.isLoading = false;
       })
       .addCase(getStockTransferById.pending, (state) => {
