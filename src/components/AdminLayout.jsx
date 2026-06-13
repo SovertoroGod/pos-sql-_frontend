@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Sidebar from './SideBar';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Outlet } from "react-router-dom";
+import NotificationBell from "../modules/notification/NotificationBell";
 
 const AdminLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -27,8 +28,16 @@ const AdminLayout = () => {
       </button>
 
       {/* Main Content */}
-      <div className="flex-1 overflow-auto">
-        <Outlet />
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Top Header Bar */}
+        <div className="h-14 bg-white border-b border-gray-200 flex items-center justify-end px-4 shrink-0">
+          <NotificationBell />
+        </div>
+
+        {/* Page Content */}
+        <div className="flex-1 overflow-auto">
+          <Outlet />
+        </div>
       </div>
     </div>
   );

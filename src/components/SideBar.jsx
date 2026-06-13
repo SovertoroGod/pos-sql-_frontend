@@ -7,6 +7,7 @@ import {
   Building2,
   List,
   History,
+  ArrowLeftRight,
 } from "lucide-react";
 import useAuth from "../hooks/useAuth";
 
@@ -25,6 +26,7 @@ const Sidebar = () => {
     { to: "/admin/categories", label: "Categories", icon: Package },
     { to: "/admin/product-lists", label: "Product Lists", icon: List },
     { to: "/admin/product-unit-logs", label: "Product Unit Logs", icon: History },
+    { to: "/admin/stock-transfers", label: "Stock Transfers", icon: ArrowLeftRight },
   ];
 
   return (

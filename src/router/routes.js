@@ -28,6 +28,10 @@ import EditProductUnitPage from "../modules/productUnit/EditProductUnitPage";
 import ProductUnitLogsPage from "../modules/productUnitLog/ProductUnitLogsPage";
 import AdminDashboard from "../pages/admin/AdminDashBoard";
 import ErrorPage from "../pages/ErrorPage";
+import StockTransfersPage from "../modules/stockTransfer/StockTransfersPage";
+import StockTransferDetailPage from "../modules/stockTransfer/StockTransferDetailPage";
+import CreateStockTransferPage from "../modules/stockTransfer/CreateStockTransferPage";
+import NotificationsPage from "../modules/notification/NotificationsPage";
 import { ROLES } from "../utils/roles";
 
 export const routes = [
@@ -151,6 +155,22 @@ export const routes = [
       {
         path: "product-unit-logs",
         element: ProductUnitLogsPage,
+      },
+      {
+        path: "stock-transfers",
+        element: StockTransfersPage,
+      },
+      {
+        path: "stock-transfers/:id",
+        element: StockTransferDetailPage,
+      },
+      {
+        path: "stock-transfers-create",
+        element: CreateStockTransferPage,
+      },
+      {
+        path: "notifications",
+        element: NotificationsPage,
       },
     ],
   },

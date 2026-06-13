@@ -14,7 +14,7 @@ export const redirectAfterLogin = (user) => {
   if (!user) return "/";
 
   // Always redirect logged-in users to admin/users page
-  return "/admin/users";
+  return "/admin";
 };;
 
 export const hasPermission = (userRole, allowedRoles = []) => {
