@@ -213,7 +213,7 @@ const BranchDetailPage = () => {
                                             <button onClick={() => navigate(`/admin/branches-edit/${id}`)} className="w-full inline-flex items-center justify-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors">
                                                 Edit Branch
                                             </button>
-                                            <button className="w-full inline-flex items-center justify-center px-4 py-2 border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium rounded-lg transition-colors">
+                                            <button onClick={() => navigate(`/admin/branches-reports/${id}`)} className="w-full inline-flex items-center justify-center px-4 py-2 border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium rounded-lg transition-colors">
                                                 View Reports
                                             </button>
                                             <button

@@ -16,7 +16,7 @@ const renderRoutes = (routes) => {
     );
 
     return (
-      <Route key={index} path={route.path} element={wrappedElement}>
+      <Route key={index} {...(route.index ? { index: true } : { path: route.path })} element={wrappedElement}>
         {route.children && renderRoutes(route.children)}
       </Route>
     );
