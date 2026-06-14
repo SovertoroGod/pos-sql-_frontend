@@ -22,6 +22,19 @@ export const getAllProductUnits = createAsyncThunk(
   },
 );
 
+export const getAllProductUnitsForManager = createAsyncThunk(
+  "productUnit/getAllProductUnitsForManager",
+  async (params, thunkAPI) => {
+    try {
+      return await productUnitServices.getAllProductUnitsForManager(params);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || error.message,
+      );
+    }
+  },
+);
+
 export const createProductUnit = createAsyncThunk(
   "productUnit/createProductUnit",
   async (data, thunkAPI) => {
@@ -83,6 +96,19 @@ const productUnitSlice = createSlice({
         state.message = action.payload?.message || "";
       })
       .addCase(getAllProductUnits.rejected, (state, action) => {
+        state.isLoading = false;
+        state.message = action.payload?.message || "";
+      })
+      .addCase(getAllProductUnitsForManager.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllProductUnitsForManager.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.productUnits = action.payload.data;
+        state.metadata = action.payload._metadata || {};
+        state.message = action.payload?.message || "";
+      })
+      .addCase(getAllProductUnitsForManager.rejected, (state, action) => {
         state.isLoading = false;
         state.message = action.payload?.message || "";
       })

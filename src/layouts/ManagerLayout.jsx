@@ -2,12 +2,13 @@ import React from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import NotificationBell from "../modules/notification/NotificationBell";
-import { LogOut, LayoutDashboard, ArrowLeftRight, Send } from "lucide-react";
+import { LogOut, LayoutDashboard, ArrowLeftRight, Send, Package } from "lucide-react";
 
 const navItems = [
   { to: "/manager", label: "Dashboard", icon: LayoutDashboard },
   { to: "/manager/stock-transfers", label: "Stock Transfers", icon: ArrowLeftRight },
   { to: "/manager/issue-items", label: "Issue Items", icon: Send },
+  { to: "/manager/product-units", label: "Stock", icon: Package },
 ];
 
 const ManagerLayout = () => {

@@ -38,6 +38,7 @@ import CreateStockTransferPage from "../modules/stockTransfer/CreateStockTransfe
 import CreateIssueItemPage from "../modules/issueItem/CreateIssueItemPage";
 import IssueItemsPage from "../modules/issueItem/IssueItemsPage";
 import ManagerIssueItemsPage from "../modules/issueItem/ManagerIssueItemsPage";
+import ManagerProductUnitsPage from "../modules/productUnit/ManagerProductUnitsPage";
 import NotificationsPage from "../modules/notification/NotificationsPage";
 import { ROLES } from "../utils/roles";
 
@@ -213,6 +214,10 @@ export const routes = [
       {
         path: "issue-items",
         element: ManagerIssueItemsPage,
+      },
+      {
+        path: "product-units",
+        element: ManagerProductUnitsPage,
       },
     ],
   },

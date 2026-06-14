@@ -5,6 +5,11 @@ const getAllProductUnits = async (params) => {
   return response.data;
 };
 
+const getAllProductUnitsForManager = async (params) => {
+  const response = await axiosClient.get("/manager/product-units", { params });
+  return response.data;
+};
+
 const createProductUnit = async (data) => {
   const response = await axiosClient.post("/admin/product-units", data);
   return response.data;
@@ -22,6 +27,7 @@ const updateProductUnit = async (id, data) => {
 
 const productUnitServices = {
   getAllProductUnits,
+  getAllProductUnitsForManager,
   createProductUnit,
   getProductUnitById,
   updateProductUnit,
