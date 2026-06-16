@@ -29,6 +29,10 @@ import ProductUnitLogsPage from "../modules/productUnitLog/ProductUnitLogsPage";
 import AdminDashboard from "../pages/admin/AdminDashBoard";
 import ManagerDashboard from "../pages/manager/ManagerDashboard";
 import ManagerLayout from "../layouts/ManagerLayout";
+import CashierLayout from "../layouts/CashierLayout";
+import SalePage from "../modules/pos/SalePage";
+import DebtsPage from "../modules/pos/DebtsPage";
+import DebtDetailPage from "../modules/pos/DebtDetailPage";
 import ErrorPage from "../pages/ErrorPage";
 import StockTransfersPage from "../modules/stockTransfer/StockTransfersPage";
 import ManagerStockTransfersPage from "../modules/stockTransfer/ManagerStockTransfersPage";
@@ -218,6 +222,25 @@ export const routes = [
       {
         path: "product-units",
         element: ManagerProductUnitsPage,
+      },
+    ],
+  },
+  {
+    path: "/pos",
+    element: CashierLayout,
+    role: [ROLES.CASHIER],
+    children: [
+      {
+        index: true,
+        element: SalePage,
+      },
+      {
+        path: "debts",
+        element: DebtsPage,
+      },
+      {
+        path: "debts/:id",
+        element: DebtDetailPage,
       },
     ],
   },

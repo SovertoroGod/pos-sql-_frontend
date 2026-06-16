@@ -1,9 +1,3 @@
-import React from 'react'
+import SalePage from "./SalePage";
 
-const POS = () => {
-  return (
-    <div>POS</div>
-  )
-}
-
-export default POS
+export default SalePage;
