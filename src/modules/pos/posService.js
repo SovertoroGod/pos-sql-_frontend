@@ -57,6 +57,16 @@ const createVoucher = async (data) => {
   return response.data;
 };
 
+const getVouchers = async (params) => {
+  const response = await axiosClient.get("/branches/vouchers", { params });
+  return response.data;
+};
+
+const getVoucherById = async (id) => {
+  const response = await axiosClient.get(`/branches/vouchers/${id}`);
+  return response.data;
+};
+
 const getDebts = async (params) => {
   const response = await axiosClient.get("/branches/debts", { params });
   return response.data;
@@ -82,6 +92,8 @@ const posService = {
   searchCustomers,
   createCustomer,
   createVoucher,
+  getVouchers,
+  getVoucherById,
   getDebts,
   getDebtById,
   repayDebt,

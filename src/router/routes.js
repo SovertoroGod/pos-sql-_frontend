@@ -33,6 +33,9 @@ import CashierLayout from "../layouts/CashierLayout";
 import SalePage from "../modules/pos/SalePage";
 import DebtsPage from "../modules/pos/DebtsPage";
 import DebtDetailPage from "../modules/pos/DebtDetailPage";
+import VoucherHistoryPage from "../modules/pos/VoucherHistoryPage";
+import VoucherDetailPage from "../modules/pos/VoucherDetailPage";
+import TodaySalesPage from "../modules/pos/TodaySalesPage";
 import ErrorPage from "../pages/ErrorPage";
 import StockTransfersPage from "../modules/stockTransfer/StockTransfersPage";
 import ManagerStockTransfersPage from "../modules/stockTransfer/ManagerStockTransfersPage";
@@ -233,6 +236,18 @@ export const routes = [
       {
         index: true,
         element: SalePage,
+      },
+      {
+        path: "today",
+        element: TodaySalesPage,
+      },
+      {
+        path: "history",
+        element: VoucherHistoryPage,
+      },
+      {
+        path: "history/:id",
+        element: VoucherDetailPage,
       },
       {
         path: "debts",

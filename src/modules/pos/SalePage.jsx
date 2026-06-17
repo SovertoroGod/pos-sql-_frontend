@@ -272,6 +272,14 @@ const SalePage = () => {
   const debtAmount = Math.max(0, grandTotal - amountPaid);
 
   const handleCreateVoucher = async () => {
+    if (debtAmount > 0 && !customer) {
+      Swal.fire({
+        icon: "warning",
+        title: "Customer Required",
+        text: "A customer must be selected when creating a voucher with debt.",
+      });
+      return;
+    }
     setIsLoading(true);
     try {
       const items = cart.map((ci) => ({
@@ -912,21 +920,21 @@ const SalePage = () => {
                   }`}
                 >$</button>
               </div>
-              <div className="relative flex-1">
+              <div className="relative w-22">
                 <input
                   type="number"
                   min="0"
                   max={voucherDiscountType === "percent" ? 100 : afterItemDiscounts}
-                  value={voucherDiscountValue}
+                  value={voucherDiscountValue || ''}
                   onFocus={(e) => e.target.select()}
                   onChange={(e) => setVoucherDiscountValue(Math.max(0, parseFloat(e.target.value) || 0))}
                   placeholder={voucherDiscountType === "percent" ? "0%" : "0.00"}
                   className="w-full px-2 py-1 text-xs border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
                 />
               </div>
-              {voucherDiscount > 0 && (
-                <span className="text-xs text-red-500 font-medium shrink-0">-${voucherDiscount.toFixed(2)}</span>
-              )}
+              <span className={`text-xs text-red-500 font-medium shrink-0 ${voucherDiscount > 0 ? 'visible' : 'invisible'}`}>
+                -${voucherDiscount.toFixed(2)}
+              </span>
             </div>
 
             <div className="flex items-center gap-2 py-1 pt-2 border-t border-gray-200">
@@ -934,7 +942,7 @@ const SalePage = () => {
               <input
                 type="number"
                 min="0"
-                value={amountPaid}
+                value={amountPaid || ''}
                 onFocus={(e) => e.target.select()}
                 onChange={(e) => setAmountPaid(Math.max(0, parseFloat(e.target.value) || 0))}
                 placeholder="0.00"

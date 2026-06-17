@@ -56,7 +56,7 @@ const DebtsPage = () => {
   const totalPages = metadata ? metadata.totalPages : 1;
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="h-full flex flex-col max-w-4xl mx-auto w-full px-4 md:px-6">
       <div className="flex items-center justify-between mb-4 shrink-0">
         <h1 className="text-xl font-bold text-gray-900 flex items-center gap-2">
           <BookOpen className="h-6 w-6 text-emerald-600" />
@@ -98,7 +98,7 @@ const DebtsPage = () => {
             <p className="text-sm">No debts found</p>
           </div>
         ) : (
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             {debts.map((debt) => (
               <button
                 key={debt.id}

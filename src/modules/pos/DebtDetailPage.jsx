@@ -191,7 +191,7 @@ const DebtDetailPage = () => {
                   type="number"
                   min="0.01"
                   max={remaining}
-                  value={repayAmount}
+                  value={repayAmount || ''}
                   onFocus={(e) => e.target.select()}
                   onChange={(e) => setRepayAmount(Math.max(0, parseFloat(e.target.value) || 0))}
                   placeholder="0.00"
