@@ -53,6 +53,8 @@ import ManagerIssueItemsPage from "../modules/issueItem/ManagerIssueItemsPage";
 import ManagerProductUnitsPage from "../modules/productUnit/ManagerProductUnitsPage";
 import ManagerVoucherListPage from "../modules/voucher/ManagerVoucherListPage";
 import ManagerVoucherDetailPage from "../modules/voucher/ManagerVoucherDetailPage";
+import ManagerBankAccountListPage from "../modules/bankAccount/ManagerBankAccountListPage";
+import ManagerBankAccountHistoryPage from "../modules/bankAccount/ManagerBankAccountHistoryPage";
 import NotificationsPage from "../modules/notification/NotificationsPage";
 import { ROLES } from "../utils/roles";
 
@@ -256,6 +258,14 @@ export const routes = [
       {
         path: "vouchers/:id",
         element: ManagerVoucherDetailPage,
+      },
+      {
+        path: "bank-accounts",
+        element: ManagerBankAccountListPage,
+      },
+      {
+        path: "bank-accounts/:id/history",
+        element: ManagerBankAccountHistoryPage,
       },
     ],
   },

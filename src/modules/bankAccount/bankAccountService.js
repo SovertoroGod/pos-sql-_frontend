@@ -25,12 +25,24 @@ const getBankAccountHistory = async (id, params) => {
   return response.data;
 };
 
+const getBankAccountsForManager = async (params) => {
+  const response = await axiosClient.get("/manager/bank-accounts", { params });
+  return response.data;
+};
+
+const getBankAccountHistoryForManager = async (id, params) => {
+  const response = await axiosClient.get(`/manager/bank-accounts/${id}/history`, { params });
+  return response.data;
+};
+
 const bankAccountServices = {
   getAllBankAccounts,
   getBankAccountById,
   createBankAccount,
   updateBankAccount,
   getBankAccountHistory,
+  getBankAccountsForManager,
+  getBankAccountHistoryForManager,
 };
 
 export default bankAccountServices;

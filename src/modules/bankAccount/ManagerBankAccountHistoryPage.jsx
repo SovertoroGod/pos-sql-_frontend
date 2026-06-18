@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import useBankAccountHistory from "../../hooks/useBankAccountHistory";
+import useManagerBankAccountHistory from "../../hooks/useManagerBankAccountHistory";
 import {
   Landmark,
   ArrowLeft,
@@ -15,7 +15,7 @@ import {
   X,
 } from "lucide-react";
 
-const BankAccountHistoryPage = () => {
+const ManagerBankAccountHistoryPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [filters, setFilters] = useState({
@@ -26,7 +26,7 @@ const BankAccountHistoryPage = () => {
   });
   const [expandedMonths, setExpandedMonths] = useState({});
 
-  const { account, data, aggregates, metadata, isLoading } = useBankAccountHistory(id, filters);
+  const { account, data, aggregates, metadata, isLoading } = useManagerBankAccountHistory(id, filters);
 
   useEffect(() => {
     if (aggregates.length > 0) {
@@ -104,7 +104,7 @@ const BankAccountHistoryPage = () => {
               <h3 className="text-lg font-medium text-gray-900 mb-2">Bank Account Not Found</h3>
               <p className="text-gray-600 mb-4">The bank account you&apos;re looking for doesn&apos;t exist.</p>
               <button
-                onClick={() => navigate("/admin/bank-accounts")}
+                onClick={() => navigate("/manager/bank-accounts")}
                 className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
               >
                 <ArrowLeft className="h-4 w-4 mr-2" />
@@ -125,7 +125,7 @@ const BankAccountHistoryPage = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
           <button
-            onClick={() => navigate("/admin/bank-accounts")}
+            onClick={() => navigate("/manager/bank-accounts")}
             className="inline-flex items-center text-gray-600 hover:text-gray-900 mb-4 transition-colors"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
@@ -140,6 +140,7 @@ const BankAccountHistoryPage = () => {
               <p className="text-gray-600 mt-1">
                 {account.bank_name} | {account.account_number}
               </p>
+              <p className="text-sm text-gray-500 mt-1">Branch transactions only</p>
             </div>
           </div>
         </div>
@@ -151,7 +152,7 @@ const BankAccountHistoryPage = () => {
                 <TrendingUp className="h-5 w-5 text-green-600" />
               </div>
               <div>
-                <p className="text-sm text-gray-600">Total Money In</p>
+                <p className="text-sm text-gray-600">Total Money In (Your Branch)</p>
                 <p className="text-xl font-semibold text-green-600">{formatAmount(totalIn)} Ks</p>
               </div>
             </div>
@@ -162,7 +163,7 @@ const BankAccountHistoryPage = () => {
                 <History className="h-5 w-5 text-blue-600" />
               </div>
               <div>
-                <p className="text-sm text-gray-600">Total Transactions</p>
+                <p className="text-sm text-gray-600">Total Transactions (Your Branch)</p>
                 <p className="text-xl font-semibold text-gray-900">{totalTx}</p>
               </div>
             </div>
@@ -221,11 +222,11 @@ const BankAccountHistoryPage = () => {
 
         <div className="bg-white rounded-lg border border-gray-200 mb-6">
           <div className="p-4 border-b border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-900">Balance by Month</h2>
+            <h2 className="text-lg font-semibold text-gray-900">Balance by Month (Your Branch)</h2>
           </div>
           <div className="p-4">
             {aggregates.length === 0 ? (
-              <p className="text-gray-500 text-center py-4">No transaction data available</p>
+              <p className="text-gray-500 text-center py-4">No transaction data available for your branch</p>
             ) : (
               <div className="space-y-3">
                 {aggregates.map((monthData) => (
@@ -277,7 +278,7 @@ const BankAccountHistoryPage = () => {
 
         <div className="bg-white shadow-sm rounded-lg border border-gray-200 overflow-hidden">
           <div className="p-4 border-b border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-900">Transaction History</h2>
+            <h2 className="text-lg font-semibold text-gray-900">Transaction History (Your Branch)</h2>
           </div>
           {isLoading ? (
             <div className="p-8 text-center">
@@ -296,7 +297,7 @@ const BankAccountHistoryPage = () => {
               <p className="text-gray-600">
                 {filters.startDate || filters.endDate
                   ? "Try adjusting your date range"
-                  : "No transactions have been recorded for this account yet"}
+                  : "No transactions have been recorded for this account in your branch yet"}
               </p>
             </div>
           ) : (
@@ -308,7 +309,6 @@ const BankAccountHistoryPage = () => {
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reference</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Branch</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Balance</th>
@@ -339,9 +339,6 @@ const BankAccountHistoryPage = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-900">{tx.customer}</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">{tx.branch || 'N/A'}</div>
                       </td>
                       <td className="px-6 py-4">
                         <div className="text-sm text-gray-600 max-w-xs truncate">{tx.description}</div>
@@ -423,4 +420,4 @@ const BankAccountHistoryPage = () => {
   );
 };
 
-export default BankAccountHistoryPage;
+export default ManagerBankAccountHistoryPage;

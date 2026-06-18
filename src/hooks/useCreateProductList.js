@@ -9,10 +9,8 @@ const useCreateProductList = () => {
   const { categories } = useSelector((state) => state.category);
 
   useEffect(() => {
-    if (!categories) {
-      dispatch(getAllCategories());
-    }
-  }, [dispatch, categories]);
+    dispatch(getAllCategories({ limit: 99999 }));
+  }, [dispatch]);
 
   const handleCreate = (data) => {
     return dispatch(createProductList(data));
