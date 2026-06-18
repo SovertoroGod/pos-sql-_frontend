@@ -12,6 +12,7 @@ import managerDashboardReducer from "../modules/managerDashboard/managerDashboar
 import stockTransferReducer from "../modules/stockTransfer/stockTransferSlice";
 import issueItemReducer from "../modules/issueItem/issueItemSlice";
 import notificationReducer from "../modules/notification/notificationSlice";
+import bankAccountReducer from "../modules/bankAccount/bankAccountSlice";
 
 export const store = configureStore({
   reducer: {
@@ -28,5 +29,6 @@ export const store = configureStore({
     stockTransfer: stockTransferReducer,
     issueItem: issueItemReducer,
     notification: notificationReducer,
+    bankAccount: bankAccountReducer,
   },
 });

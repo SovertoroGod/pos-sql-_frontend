@@ -9,6 +9,7 @@ import {
   History,
   ArrowLeftRight,
   Send,
+  Landmark,
 } from "lucide-react";
 import useAuth from "../hooks/useAuth";
 
@@ -22,6 +23,7 @@ const Sidebar = () => {
   const menuItems = [
     { to: "/admin", label: "Dashboard", icon: LayoutDashboard },
     { to: "/admin/users", label: "Users", icon: Users },
+    { to: "/admin/bank-accounts", label: "Bank Accounts", icon: Landmark },
     { to: "/admin/branches", label: "Branches", icon: Building2 },
     // { to: "/admin/reports", label: "Reports", icon: FileText },
     { to: "/admin/categories", label: "Categories", icon: Package },

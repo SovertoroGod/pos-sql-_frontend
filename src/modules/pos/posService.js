@@ -28,6 +28,13 @@ const getProductUnitsForBranch = async () => {
   return response.data;
 };
 
+const getCashierProductUnits = async (params) => {
+  const response = await axiosClient.get("/branches/product-units", {
+    params,
+  });
+  return response.data;
+};
+
 const getBankAccounts = async () => {
   const response = await axiosClient.get("/branches/bank-accounts");
   return response.data;
@@ -87,6 +94,7 @@ const posService = {
   getProductLists,
   getProductItems,
   getProductUnitsForBranch,
+  getCashierProductUnits,
   getBankAccounts,
   findCustomers,
   searchCustomers,

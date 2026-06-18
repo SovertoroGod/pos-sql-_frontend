@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { Receipt, History, ShoppingCart, BookOpen, LogOut } from "lucide-react";
+import { Receipt, History, ShoppingCart, BookOpen, LogOut, LayoutDashboard } from "lucide-react";
 import useAuth from "../../hooks/useAuth";
 
 const CashierSidebar = () => {
@@ -10,6 +10,7 @@ const CashierSidebar = () => {
     navigate("/");
   };
   const menuItems = [
+    { to: "/pos/dashboard", label: "Dashboard", icon: LayoutDashboard },
     { to: "/pos", label: "Create Voucher", icon: Receipt },
     { to: "/pos/history", label: "Voucher History", icon: History },
     { to: "/pos/today", label: "Today's Sales", icon: ShoppingCart },

@@ -1,5 +1,9 @@
 import AdminLayout from "../components/AdminLayout";
 import LoginPage from "../modules/auth/LoginPage";
+import BankAccountListPage from "../modules/bankAccount/BankAccountListPage";
+import CreateBankAccountPage from "../modules/bankAccount/CreateBankAccountPage";
+import EditBankAccountPage from "../modules/bankAccount/EditBankAccountPage";
+import BankAccountHistoryPage from "../modules/bankAccount/BankAccountHistoryPage";
 import BranchDetailPage from "../modules/branches/BranchDetailPage";
 import BranchesListPage from "../modules/branches/BranchesListPage";
 import CreateBranchPage from "../modules/branches/CreateBranchPage";
@@ -36,6 +40,7 @@ import DebtDetailPage from "../modules/pos/DebtDetailPage";
 import VoucherHistoryPage from "../modules/pos/VoucherHistoryPage";
 import VoucherDetailPage from "../modules/pos/VoucherDetailPage";
 import TodaySalesPage from "../modules/pos/TodaySalesPage";
+import CashierDashboardPage from "../modules/pos/CashierDashboardPage";
 import ErrorPage from "../pages/ErrorPage";
 import StockTransfersPage from "../modules/stockTransfer/StockTransfersPage";
 import ManagerStockTransfersPage from "../modules/stockTransfer/ManagerStockTransfersPage";
@@ -46,6 +51,8 @@ import CreateIssueItemPage from "../modules/issueItem/CreateIssueItemPage";
 import IssueItemsPage from "../modules/issueItem/IssueItemsPage";
 import ManagerIssueItemsPage from "../modules/issueItem/ManagerIssueItemsPage";
 import ManagerProductUnitsPage from "../modules/productUnit/ManagerProductUnitsPage";
+import ManagerVoucherListPage from "../modules/voucher/ManagerVoucherListPage";
+import ManagerVoucherDetailPage from "../modules/voucher/ManagerVoucherDetailPage";
 import NotificationsPage from "../modules/notification/NotificationsPage";
 import { ROLES } from "../utils/roles";
 
@@ -66,6 +73,22 @@ export const routes = [
       {
         index: true,
         element: AdminDashboard,
+      },
+      {
+        path: "bank-accounts",
+        element: BankAccountListPage,
+      },
+      {
+        path: "bank-accounts-create",
+        element: CreateBankAccountPage,
+      },
+      {
+        path: "bank-accounts-edit/:id",
+        element: EditBankAccountPage,
+      },
+      {
+        path: "bank-accounts/:id/history",
+        element: BankAccountHistoryPage,
       },
       {
         path: "users",
@@ -226,6 +249,14 @@ export const routes = [
         path: "product-units",
         element: ManagerProductUnitsPage,
       },
+      {
+        path: "vouchers",
+        element: ManagerVoucherListPage,
+      },
+      {
+        path: "vouchers/:id",
+        element: ManagerVoucherDetailPage,
+      },
     ],
   },
   {
@@ -236,6 +267,10 @@ export const routes = [
       {
         index: true,
         element: SalePage,
+      },
+      {
+        path: "dashboard",
+        element: CashierDashboardPage,
       },
       {
         path: "today",
